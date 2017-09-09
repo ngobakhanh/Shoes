@@ -1,0 +1,74 @@
+﻿@model PagedList.IPagedList<Shoes.Areas.Admin.Models.Category>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix">
+    <h2 class="pull-left">List Categories</h2>
+    <div class="pull-right" style="margin-top:20px">
+        <a href="@Url.Action("Create", "Categories")" class="btn btn-primary"><i class='glyphicon glyphicon-plus'></i> Add Category</a>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Category ID
+        </th>
+        <th>
+            Category Name
+        </th>
+        <th>
+            Image
+        </th>
+        <th class="text-center">
+            Parent ID
+        </th>
+        <th class="text-center">
+            Sort ID
+        </th>
+        <th>
+            Status
+        </th>
+        <th style="width:235px"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.id
+            </td>
+            <td>
+                @item.name
+            </td>
+            <td>
+                @item.image
+            </td>
+            <td class="text-center">
+                @item.parent_id
+            </td>
+            <td class="text-center">
+                @item.sort_id
+            </td>
+            <td>
+                @item.Status
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "Categories", new { id=item.id })" class="btn btn-default btn-sm"><i class='glyphicon glyphicon-pencil'></i> Edit</a> |
+                <a href="@Url.Action("Details", "Categories", new { id=item.id })" class="btn btn-default btn-sm"><i class='glyphicon glyphicon-eye-open'></i> View</a> |
+                <a href="@Url.Action("Delete", "Categories", new { id=item.id })" class="btn btn-default btn-sm"><i class='glyphicon glyphicon-remove'></i> Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="row text-right">
+    <div class="col-sm-12">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions { DisplayLinkToFirstPage = PagedListDisplayMode.Always, MaximumPageNumbersToDisplay = 5 })
+    </div>
+</div>

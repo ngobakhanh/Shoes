@@ -1,0 +1,159 @@
+﻿body {
+    padding-top: 50px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+#total_items{
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    background: #ff6c25;
+    color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    min-width: 17px;
+    height: 17px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 17px;
+}
+.description{
+    display: block;
+    font-size: 13px;
+    color: #000;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    margin: 8px auto 0;
+    height: 36px;
+    line-height: 18px;
+}
+.sale-tag{
+    background-color: #ff9601;
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 5px;
+    margin-top: -2px;
+    padding: 5px;
+    vertical-align: middle;
+}
+.price-sale{
+    font-size: 14px;
+    color: #444;
+    font-weight: 700;
+    padding: 5px 0 0;
+    text-align: left;
+    margin-left: 76px;
+}
+.price-regular{
+    font-size: 11px;
+    color: #999;
+    text-decoration: line-through;
+    display: block;
+    text-align: left;
+    padding-top: 5px;
+}
+.product-detail{
+     margin-top:10px;
+     margin-bottom:10px;
+     text-align:center;
+}
+.product-detail span{
+    color:#ff0000;
+}
+#footer{
+    background:#314D68;
+    padding:20px;
+}
+#footer .row{
+    color:#fff;
+}
+.margin-top-20{
+    margin-top:20px
+}
+.navbar-inverse{
+    background:#314D68;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #999;
+}
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+.search_box {
+    background: #486179;
+    border: 1px solid #486179;
+    position: relative;
+    float: left;
+    border-radius: 2px;
+    margin: 6px 0 0px 10em;
+}
+.search_box form input[type="text"] {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 0.85em;
+    color: #94A3B1;
+    font-family: 'Oxygen', sans-serif;
+    width: 100px;
+    padding: 10px;
+    margin: 0;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+}
+.search_box form input[type="submit"] {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: url(https://w3layouts.com/wp-content/themes/w3layouts/images/web/search.png) no-repeat 0;
+    width: 30px;
+    height: 25px;
+    padding: 8px;
+}
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 80%;
+      margin: auto;
+}
+.sort-items a{
+    text-decoration:none;
+    color:#000;
+}
+.sort-items a:hover{
+    color:#808080;
+}
+.child-one li > a{
+    text-decoration:none;
+    color:#fff;
+}
+.child-one li > a:hover{
+    text-decoration:none;
+    color:#999;
+}

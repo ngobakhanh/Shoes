@@ -1,0 +1,83 @@
+﻿@model PagedList.IPagedList<Shoes.Areas.Admin.Models.Product>
+@using PagedList.Mvc;
+@using System.Web.UI.WebControls;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="clearfix" style="margin-top:20px">
+    <div class="pull-right sort-items">
+        <a href="@Url.Action("Index","Store",new { orderby="Price",asc="asc", category=Model.ToList()[0].Category.id,description= ViewBag.description })"> Giá tăng dần</a> |
+        <a href="@Url.Action("Index","Store",new { orderby="Price",asc="desc", category=Model.ToList()[0].Category.id,description= ViewBag.description })"> Giá giảm dần</a>
+    </div>
+</div>
+
+<hr />
+
+
+<ul class="list-unstyled row padding-top">
+    @foreach (var item in Model)
+    {
+        <li class="col-sm-3 margin-top-20 text-center">
+            <div class="thumbnail">
+                <a href="@Url.Action("Details","Store",new { id=item.id})">
+                    <img src="~/Content/Images/@item.image" class="img-responsive" />
+                </a>
+                <span class="description">@item.description</span>
+                <p class="price-sale">
+                    @((item.price * (100 - item.discount) / 100).ToString("C0"))
+                    <span class="sale-tag">-@(item.discount)%</span>
+                    <span class="price-regular">@item.price.ToString("C0")</span>
+                </p>
+                <button type="button" data-param="@item.id" class="btn btn-info add-to-cart" title="Add to Cart">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>Thêm vào giỏ hàng
+                </button>
+            </div>
+        </li>
+    }
+</ul>
+
+
+@*
+        @foreach (var item in Model)
+    {
+        if (count == 0)
+        {
+            @:<div class="row padding-top text-center margin-top-20">
+        }
+        <div class="col-sm-@(12/column_count)">
+            <div class="thumbnail">
+                <a href="@Url.Action("Details","Store",new { id=item.id})">
+                    <img src="~/Content/Images/@item.image" class="img-responsive" />
+                </a>
+                <span class="description">@item.description</span>
+                <p class="price-sale">
+                    @((item.price * (100 - item.discount) / 100).ToString("C0"))
+                    <span class="sale-tag">-@(item.discount)%</span>
+                    <span class="price-regular">@item.price.ToString("C0")</span>
+                </p>
+                <button type="button" data-param="@item.id" class="btn btn-info add-to-cart" title="Add to Cart">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>Thêm vào giỏ hàng
+                </button>
+            </div>
+        </div>
+        if (count == column_count - 1)
+        {
+            @:</div>
+        }
+        //count++;
+        //if (count == 3) { count = 0; }
+        count = ++count % column_count;
+    }
+*@
+
+
+<div class="row text-right">
+    <div class="col-sm-12">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, category = ViewBag.category.SelectedValue, description = ViewBag.description, orderby = ViewBag.orderby.SelectedValue, asc = ViewBag.asc }), new PagedListRenderOptions { DisplayLinkToFirstPage = PagedListDisplayMode.Always, MaximumPageNumbersToDisplay = 5 })
+    </div>
+</div>

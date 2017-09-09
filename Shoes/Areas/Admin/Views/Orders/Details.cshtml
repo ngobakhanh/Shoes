@@ -1,0 +1,104 @@
+﻿@using Shoes.Areas.Admin.Models
+@model Shoes.Areas.Admin.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-10">
+        <h2>Order ID: @Model.id.ToString("000000")</h2>
+    </div>
+    <div class="col-sm-2">
+        <br />
+        <p class="text-right">
+            Status: @Model.status<br />
+            Date: @Model.date.ToShortDateString()
+        </p>
+    </div>
+</div>
+<hr />
+<table cellspacing="2" cellpadding="5">
+    <tr>
+        <td>Customer:</td>
+        <td>@Model.Customer.name</td>
+    </tr>
+    <tr>
+        <td>Address:</td>
+        <td>@Model.Customer.address</td>
+    </tr>
+    <tr>
+        <td>Phone:</td>
+        <td>@Model.Customer.phone</td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td>@Model.Customer.email</td>
+    </tr>
+</table>
+<br />
+<table class="table">
+    <tr>
+        <th>Photo</th>
+        <th class="text-center">SN</th>
+        <th>ID</th>
+        <th>Description</th>
+        <th class="text-right">Quantity</th>
+        <th class="text-right">Old Price</th>
+        <th class="text-right">Discount</th>
+        <th class="text-right">New Price</th>
+        <th class="text-right">Amount</th>
+    </tr>
+    @{
+        int i = 0;
+    }
+    @foreach (var item in Model.OrderDetails)
+    {
+        i++;
+        using (Html.BeginForm("Update", "Cart"))
+        {
+            <tr>
+                <td><img src="~/Content/Images/@item.Product.image" class="img-responsive" style="height:60px" /></td>
+                <td class="text-center">@i</td>
+                <td>@item.id</td>
+                <td> @item.Product.description</td>
+                <td class="text-right">
+                    @item.quantity.ToString("N0")
+                </td>
+                <td class="text-right"><s>@item.price.ToString("C0")</s></td>
+                <td class="text-right">@(item.discount)%</td>
+                <td class="text-right">@item.NewPrice</td>
+                <td class="text-right">@item.Amount.ToString("C0")</td>
+            </tr>
+        }
+    }
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th class="text-right">Total</th>
+        <th class="text-right">@Model.TotalAmount.ToString("C0")</th>
+    </tr>
+</table>
+<hr />
+<i>Thank you for ordering perts from our sites! We will contact you within 24 hours.</i><br />
+<b>Please contact our staffs if needed!</b>
+<table cellspacing="2" cellpadding="5">
+    <tr>
+        <th>Name:</th>
+        <td>@Model.Employee.name</td>
+    </tr>
+    <tr>
+        <th>Phone:</th>
+        <td>@Model.Employee.phone</td>
+    </tr>
+    <tr>
+        <th>Email:</th>
+        <td>@Model.Employee.email</td>
+    </tr>
+</table>

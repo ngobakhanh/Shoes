@@ -1,0 +1,145 @@
+﻿@using Shoes.Areas.Admin.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("CRAZY SHOP", "Home", "Store", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Giày Nam
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Giày Boot Nam", "Index", "Store", new { category = 2 }, null)</li>
+                            <li>@Html.ActionLink("Giày Thể Thao Nam", "Index", "Store", new { category = 1 }, null)</li>
+                            <li>@Html.ActionLink("Giày Mọi Nam", "Index", "Store", new { category = 3 }, null)</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Giày Nữ
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Giày Boot Nữ Hàn Quốc", "Index", "Store", new { category = 4 }, null)</li>
+                            <li>@Html.ActionLink("Giày Thể Thao Nữ", "Index", "Store", new { category = 5 }, null)</li>
+                            <li>@Html.ActionLink("Giày Oxford Nữ", "Index", "Store", new { category = 6 }, null)</li>
+                            <li>@Html.ActionLink("Giày Sandal Nữ", "Index", "Store", new { category = 7 }, null)</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Giày Cặp Đôi", "Index", "Store", new { category = 8 }, null)</li>
+                    <li>
+                        <div class="search_box">
+                            <form role="form" method="post">
+                                <input type="text" name="description" class="search-textbox" value="@ViewBag.description" placeholder="Tìm kiếm...">
+                                <input type="submit" value="" />
+                            </form>
+                        </div>
+                    </li>              
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="@Url.Action("Index","Carts")" style="position:relative"><span class="glyphicon glyphicon-shopping-cart"></span><span id="total_items">@Cart.CountItem</span><span id="total_amount">  @Cart.TotalAmount.ToString("C0")</span></a>
+                    </li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        @RenderBody()
+        <br /><br />
+    </div>
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-3" style="font-size:13px;">
+                    <div>
+                        <p style="text-align: justify;">"Chúng tôi mang đến sự khác biệt!" - Cùng với xu hướng thời trang của thế giới Hệ  thống CrazyShop đã và đang không ngừng đổi mới để mang đến cho các bản trẻ các mẫu thời trang độc đáo, mới lạ, để tiên phong cho một phong cách thời trang mới, một phong cách biểu tượng cho giới trẻ trên cả nước. Vì thế CrazyShop đang dần trở  thành một cái tên quen thuộc với tất cả các bạn trẻ với những phong cách  thời trang hoàn toàn mới lạ, khẳng định cá tính của chính mình.</p>
+                        <p style="text-align: justify;"><em>Sự hài  lòng của các bạn chính là mục tiêu phấn đấu của chúng tôi.&nbsp;</em></p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8">
+                            <div>
+                                <div class="row">
+                                    <div class="col-xs-2" style="font-size: 13px;">
+                                        <img src="~/Content/Images/icon-shop.png" />
+                                    </div>
+                                    <div class="col-xs-10" style="font-size: 13px;">
+                                        <p><strong>CrazyShop : 822 Cách mạng tháng tám - Phường 5 - Quận Tân Bình - TP HCM</strong>&nbsp;</p>
+                                        <p>Hotline: 0898.529.230</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="guide">
+                                <b>Hướng Dẫn</b>
+                                <ul class="child-one">
+                                    <li><a href="@Url.Action("Muahang","Store")">Hướng dẫn mua hàng</a></li>
+                                    <li><a href="@Url.Action("Charge","Store")">Hướng dẫn thanh toán</a></li>
+                                    <li><a href="@Url.Action("Dosizegiay","Store")">Cách đo size giày</a></li>
+                                    <li><a href="@Url.Action("Contact","Store")">Liên hệ</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <a id="gotop" class="back-to-top" style="position: fixed; bottom: 10px; right: 5px; display:none">
+        <img src="~/Content/Images/gotop.png" />
+    </a>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @RenderSection("jsFooter", required: false)
+    <script>
+
+        $(document).ready(function () {
+            var offset = 120;
+            var duration = 500;
+            $('.back-to-top').fadeOut(duration);
+
+            $(window).scroll(function () {
+
+                if ($(this).scrollTop() > offset) {
+                    $('.back-to-top').fadeIn(duration);
+                } else {
+                    $('.back-to-top').fadeOut(duration);
+                }
+            });
+
+            $("#gotop").click(function () {
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

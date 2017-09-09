@@ -1,0 +1,155 @@
+﻿@using Shoes.Areas.Admin.Models
+@model IEnumerable<Item>
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Cart.CountItem > 0)
+{
+    <h2>Giỏ hàng của bạn</h2>
+        <table class="table" id="tablecart">
+            <tr>
+                <th>Hình</th>
+                <th>Mã Sản phẩm</th>
+                <th class="text-center">Tên sản phẩm</th>
+                <th class="text-right">Số lượng</th>
+                <th class="text-right">Giá cũ</th>
+                <th class="text-right">Giảm giá</th>
+                <th class="text-right">Giá sản phẩm</th>
+                <th class="text-right">Thành tiền</th>
+                <th class="text-right"><a href="@Url.Action("Empty","Carts")"> Xóa sạch giỏ hàng</a></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr data-id="@item.ID">
+                    <td>
+                        <img src="~/Content/Images/@item.Image" class="img-responsive" style="height:60px" />
+                    </td>
+                    <td>@item.ID</td>
+                    <td>@item.Description</td>
+                    <td class="text-right">
+                        <span class="pull-right">
+                            @Html.TextBox("quantity" + item.ID, item.Quantity, new { @class = "form-control text-right input-quantity", style = "width:80px; text-align:center", type = "number", min = "1" ,max="10"})
+                        </span>
+                    </td>
+                    <td class="text-right"><s>@item.Price.ToString("C0")</s></td>
+                    <td class="text-right">@(item.Discount)%</td>
+                    <td class="text-right">@item.NewPrice.ToString("C0")</td>
+                    <td class="text-right" id="amount@(item.ID)">@item.Amount.ToString("C0")</td>
+                    <td class="text-right">
+                        <button type="button" class="btn btn-link btn-delete" id="btn_delete" data-param="@item.ID" title="Delete">
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-right">Tổng cộng</td>
+                <td class="text-right" id="cart_total_amount">@Cart.TotalAmount.ToString("C0")</td>
+                <td class="text-right"><a href="@Url.Action("CheckOut","Carts")" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span> Thanh toán</a></td>
+            </tr>
+        </table>
+}
+else
+{
+    <div class="text-center">
+        <img src="~/Content/Images/cart-empty.png" />
+        <p class="alert alert-info"> Không có sản phẩm nảo trong giỏ hàng của bạn</p>
+    </div>
+}
+
+<div class="pull-left">
+    <a href="@Url.Action("Index","Store")" class="btn btn-link"><span class="glyphicon glyphicon-circle-arrow-left"></span> Tiếp tục mua hàng</a>
+</div>
+<br /><br /><br />
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script language="javascript">
+
+        $(".btn-delete").click(function () {
+            var tr = $(this).closest("tr");//Lay tr chua button Delete
+            $.ajax({
+                url: "/Carts/Delete",//Controller/Action xu ly yeu cau
+                method: "GET",//Phuong thuc gui du lieu len server
+                async: true,//Xu ly yeu cau theo kieu bat dong bo
+                cache: false,//Khong cache du lieu
+                data: {//Du lieu gui len server
+                    id: $(this).data("param")
+                },
+                beforeSend: function () {//Duoc goi truoc khi gui yeu cau len server
+                    alert_show("alert-info", "Info!", "Deleting the item. Please wait...");
+                }
+            }).done(function (result) {//Duoc goi sau khi server da xu ly xong yeu cau
+                if (result.Status == "OK") {
+                    $("#total_amount").html(result.TotalAmount);
+                    $("#cart_total_amount").html(result.TotalAmount);
+                    $("#total_items").html(result.TotalItems);
+                    //Xoa dong chua san pham bi delete
+                    tr.remove();
+                    alert_show("alert-success", "Success!", "Deleting the item successfully");
+                    if (result.TotalItems <= 0) {
+                        window.location.reload();
+                    }
+                }
+            }).fail(function (xhr, status) {//Duoc goi khi server bi loi khi xu ly yeu cau
+                //xhr: la doi tuong HttpRequest dung de gui yeu cau va nhan ket qua
+                //status: la tinh trang loi
+                alert_show("alert-danger", "Error!", "Error " + status + " :" + xhr.statusText);
+            }).always(function (result) {//Luon duoc goi sau khi server xu ly xong yeu cau
+            })
+        });
+
+        @*
+        $("#btn-update").click(function () {
+        var quantity = $(this).parents("tr").find(".input-quantity").val();
+        var id = $(this).parents("tr").data("id");
+        updateCart(id, quantity);
+        });
+        *@
+
+        $(".input-quantity").on("change", function () {
+            var quantity = $(this).val();
+            var id = $(this).parents("tr").data("id");
+            updateCart(id, quantity);
+        });
+        var updateCart = function (id, quantity) {
+            $.ajax({
+                url: "/Carts/Update",//Controller/Action xu ly yeu cau
+                method: "GET",//Phuong thuc gui du lieu len server
+                async: true,//Xu ly yeu cau theo kieu bat dong bo
+                cache: false,//Khong cache du lieu
+                data: {//Du lieu gui len server
+                    id: id,
+                    quantity: quantity
+                },
+                beforeSend: function () {//Duoc goi truoc khi gui yeu cau len server
+                    alert_show("alert-info", "Info!", "Updating the item. Please wait...");
+                }
+            }).done(function (result) {//Duoc goi sau khi server da xu ly xong yeu cau
+                if (result.Status == "OK") {
+                    $("#total_amount").html(result.TotalAmount);
+                    $("#cart_total_amount").html(result.TotalAmount);
+                    $("#amount" + id).html(result.Amount);
+                    //console.log(result.TotalItems);
+                    $("#total_items").html(result.TotalItems);
+                    alert_show("alert-success", "Success!", "Updating the item successfully");
+                }
+            }).fail(function (xhr, status) {//Duoc goi khi server bi loi khi xu ly yeu cau
+                //xhr: la doi tuong HttpRequest dung de gui yeu cau va nhan ket qua
+                //status: la tinh trang loi
+                alert_show("alert-danger", "Error!", "Error " + status + " :" + xhr.statusText);
+            }).always(function () {//Luon duoc goi sau khi server xu ly xong yeu cau
+            });
+        }
+    </script>
+}

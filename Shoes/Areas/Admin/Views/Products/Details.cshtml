@@ -1,0 +1,80 @@
+﻿@model Shoes.Areas.Admin.Models.Product
+
+@{
+    ViewBag.Title = "Product Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div>
+    <h2>Product Detail</h2>
+    <br />
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+            <dt>
+                Product Name
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.description)
+            </dd>
+
+            <dt>
+                Price
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.price)
+            </dd>
+
+            <dt>
+                Discount
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.discount)
+            </dd>
+
+            <dt>
+                Image
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.image)
+            </dd>
+
+            <dt>
+                Sort ID
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.sort_id)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+
+            <dt>
+                Category Name
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Category.name)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="col-md=8">
+        <img src="~/Content/Images/@Model.image" class="img-responsive" />
+    </div>
+</div>
+<p>
+    <a href="@Url.Action("Edit","Products",new { id=Model.id})" class="btn btn-default"> Edit</a> |
+    <a href="@Url.Action("Index","Products")" class="btn btn-default"> Back to List</a>
+</p>

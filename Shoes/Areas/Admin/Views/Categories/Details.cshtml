@@ -1,0 +1,61 @@
+﻿@model Shoes.Areas.Admin.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h2>Category Details</h2>
+
+<div>
+    <div class="col-sm-4">
+        <dl class="dl-horizontal">
+            <dt>
+                Category Name
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.name)
+            </dd>
+
+            <dt>
+                Image
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.image)
+            </dd>
+
+            <dt>
+                Parent ID
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.parent_id)
+            </dd>
+
+            <dt>
+                Sort ID
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.sort_id)
+            </dd>
+
+            <dt>
+                Status
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-sm-8">
+        <img src="~/Content/Images/@Model.image" class="img-responsive" />
+    </div>
+</div>
+<p>
+    <a href="@Url.Action("Edit","Categories",new { id=Model.id})" class="btn btn-default"> Edit</a>|
+    <a href="@Url.Action("Index","Categories")" class="btn btn-default"> Back to list</a>
+</p>

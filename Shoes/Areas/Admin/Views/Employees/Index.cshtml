@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Shoes.Areas.Admin.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix">
+    <h2 class="pull-left">Employees List</h2>
+    <div class="pull-right" style="margin-top:20px">
+        <a href="@Url.Action("Create", "Employees")" class="btn btn-primary"><i class='glyphicon glyphicon-plus'></i> Add Employee</a>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Phone Number
+        </th>
+        <th>
+           Email
+        </th>
+        <th>
+            Department ID
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.department_id)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit", "Employees", new { id=item.id })" class="btn btn-default btn-sm"><i class='glyphicon glyphicon-pencil'></i> Edit</a> |
+            <a href="@Url.Action("Delete", "Employees", new { id=item.id })" class="btn btn-default btn-sm"><i class='glyphicon glyphicon-remove'></i> Delete</a>
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,103 @@
+﻿@using Shoes.Areas.Admin.Models
+@model Shoes.Areas.Admin.Models.Order
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-10">
+        <h2>Mã hóa đơn: @Model.id.ToString("000000")</h2>
+    </div>
+    <div class="col-sm-2">
+        <br />
+        <p class="text-right">
+            Trạng thái: @Model.status<br />
+            Ngày: @Model.date.ToShortDateString()
+        </p>
+    </div>
+</div>
+<hr />
+<table cellspacing="2" cellpadding="5">
+    <tr>
+        <td>Khách hàng:</td>
+        <td>@Model.Customer.name</td>
+    </tr>
+    <tr>
+        <td>Địa chỉ:</td>
+        <td>@Model.Customer.address</td>
+    </tr>
+    <tr>
+        <td>Số điện thoại:</td>
+        <td>@Model.Customer.phone</td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td>@Model.Customer.email</td>
+    </tr>
+</table>
+<br />
+<table class="table">
+    <tr>
+        <th class="text-center">STT</th>
+        <th>Hình</th>
+        <th>Mã sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th class="text-right">Số lượng</th>
+        <th class="text-right">Giá cũ</th>
+        <th class="text-right">Giảm giá</th>
+        <th class="text-right">Giá</th>
+        <th class="text-right">Thành tiền</th>
+    </tr>
+    @{
+        int i = 0;
+    }
+    @foreach (var item in Model.OrderDetails)
+    {
+        i++;
+        using (Html.BeginForm("Update", "Carts"))
+        {
+            <tr>
+                <td class="text-center">@i</td>
+                <td><img src="~/Content/Images/@item.Product.image" class="img-responsive" style="height:60px" /></td>
+                <td>@item.id</td>
+                <td> @item.Product.description</td>
+                <td class="text-right">
+                    @item.quantity.ToString("N0")
+                </td>
+                <td class="text-right"><s>@item.price.ToString("C0")</s></td>
+                <td class="text-right">@(item.discount)%</td>
+                <td class="text-right">@item.NewPrice</td>
+                <td class="text-right">@item.Amount.ToString("C0")</td>
+            </tr>
+        }
+    }
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th class="text-right">Tổng cộng:</th>
+        <th class="text-right">@Model.TotalAmount.ToString("C2")</th>
+    </tr>
+</table>
+<hr />
+<i>Cảm ơn quý khách đã mua hàng từ website của chúng tôi, chúng tôi sẽ liên hệ với bạn trong vòng 24h</i><br />
+<b>Vui lòng liên hệ với nhân viên nếu có thắc mắc!</b>
+<table cellspacing="2" cellpadding="5">
+    <tr>
+        <th>Tên:</th>
+        <td>@Model.Employee.name</td>
+    </tr>
+    <tr>
+        <th>Số điện thoại:</th>
+        <td>@Model.Employee.phone</td>
+    </tr>
+    <tr>
+        <th>Email:</th>
+        <td>@Model.Employee.email</td>
+    </tr>
+</table>

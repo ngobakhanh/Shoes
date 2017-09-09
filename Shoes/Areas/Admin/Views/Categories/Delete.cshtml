@@ -1,0 +1,68 @@
+﻿@model Shoes.Areas.Admin.Models.Category
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h3>Are you sure you want to delete this Category?</h3>
+<br />
+<div>
+    <div class="col-sm-4">
+        <dl class="dl-horizontal">
+            <dt>
+                Category Name
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.name)
+            </dd>
+
+            <dt>
+                Image
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.image)
+            </dd>
+
+            <dt>
+                Parent ID
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.parent_id)
+            </dd>
+
+            <dt>
+                Sort ID
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.sort_id)
+            </dd>
+
+            <dt>
+                Status
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-sm-8">
+        <img src="~/Content/Images/@Model.image" class="img-responsive" />
+    </div>
+</div>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a href="@Url.Action("Index","Categories")" class="btn btn-default"> Back to list</a>
+        </div>
+    }
+</div>

@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #mapCanvas {
+        width: 100%;
+        height: 600px;
+    }
+</style>
+@section jsFooter{
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxOXFoTUTysuqfH7niStKxuL6NQds9q6s&callback=initMap"></script>
+    <script>
+        function initMap() {
+            var uluru = { lat: 10.792060, lng: 106.655436 };
+            var map = new google.maps.Map(document.getElementById('mapCanvas'), {
+                zoom: 18,
+                center: uluru
+            });
+
+            var contentString = '';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map,
+                title: 'Địa chỉ'
+            });
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+}
+<div class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Thông Tin Liên Hệ</h2>
+            <div class="row">
+                <div class="col-xs-2" style="font-size: 13px;">
+                    <img src="~/Content/Images/icon-shop.png" />
+                </div>
+                <div class="col-xs-10" style="font-size: 13px;">
+                    <p><strong>CrazyShop : 822 Cách mạng tháng tám - Phường 5 - Quận Tân Bình - TP HCM</strong>&nbsp;</p>
+                    <p>Hotline: 0898.529.230</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Bản Đồ</h2>
+            <div class="map" id="mapCanvas"></div>
+        </div>
+    </div>
+</div>
+
